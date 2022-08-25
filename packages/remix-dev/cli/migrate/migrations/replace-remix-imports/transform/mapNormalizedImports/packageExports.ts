@@ -91,7 +91,7 @@ export const packageExports: Record<Package, Exports> = {
     type: [...defaultAdapterExports.type],
   },
   cloudflare: {
-    value: [...defaultRuntimeExports.value, "createCloudflareKVSessionStorage"],
+    value: [...defaultRuntimeExports.value, "createCloudflareKVSessionStorage", "createWorkersKVSessionStorage"],
     type: [...defaultRuntimeExports.type],
   },
   "cloudflare-pages": {
