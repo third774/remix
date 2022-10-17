@@ -867,6 +867,11 @@ import(${JSON.stringify(manifest.entry.module)});`;
     <>
       <link
         rel="modulepreload"
+        href={manifest.url}
+        crossOrigin={props.crossOrigin}
+      />
+      <link
+        rel="modulepreload"
         href={manifest.entry.module}
         crossOrigin={props.crossOrigin}
       />
@@ -983,7 +988,7 @@ let FormImpl = React.forwardRef<HTMLFormElement, FormImplProps>(
                 let submitter = (event as unknown as HTMLSubmitEvent)
                   .nativeEvent.submitter as HTMLFormSubmitter | null;
 
-                submit(submitter || event.currentTarget, { method, replace });
+                submit(submitter || event.currentTarget, { replace });
               }
         }
         {...props}
