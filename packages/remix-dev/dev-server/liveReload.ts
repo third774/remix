@@ -4,7 +4,7 @@ import * as path from "path";
 import prettyMs from "pretty-ms";
 import WebSocket from "ws";
 
-import { type RemixConfig, readConfig } from "../config";
+import { type RemixConfig } from "../config";
 import * as compiler from "../compiler";
 
 type WatchCallbacks = {
@@ -13,19 +13,13 @@ type WatchCallbacks = {
 };
 
 export async function watch(
-  remixRootOrConfig: string | RemixConfig,
-  modeArg?: string,
-  callbacks?: WatchCallbacks
+  config: RemixConfig,
+  mode: compiler.CompileOptions["mode"],
+  { onInitialBuild, onRebuildStart }: WatchCallbacks = {}
 ): Promise<void> {
-  let { onInitialBuild, onRebuildStart } = callbacks || {};
-  let mode = compiler.parseMode(modeArg ?? "", "development");
-  console.log(`Watching Remix app in ${mode} mode...`);
+  // console.log(`Watching Remix app in ${mode} mode...`);
 
   let start = Date.now();
-  let config =
-    typeof remixRootOrConfig === "object"
-      ? remixRootOrConfig
-      : await readConfig(remixRootOrConfig);
 
   let wss = new WebSocket.Server({ port: config.devServerPort });
   function broadcast(event: { type: string; [key: string]: any }) {
@@ -38,8 +32,8 @@ export async function watch(
     }, config.devServerBroadcastDelay);
   }
 
-  function log(_message: string) {
-    let message = `💿 ${_message}`;
+  function log(message: string) {
+    message = `💿 ${message}`;
     console.log(message);
     broadcast({ type: "LOG", message });
   }
@@ -48,12 +42,11 @@ export async function watch(
     mode,
     onInitialBuild,
     onRebuildStart() {
-      start = Date.now();
       onRebuildStart?.();
       log("Rebuilding...");
     },
-    onRebuildFinish() {
-      log(`Rebuilt in ${prettyMs(Date.now() - start)}`);
+    onRebuildFinish(durationMs) {
+      log(`Rebuilt in ${durationMs}`);
       broadcast({ type: "RELOAD" });
     },
     onFileCreated(file) {
@@ -69,6 +62,7 @@ export async function watch(
 
   console.log(`💿 Built in ${prettyMs(Date.now() - start)}`);
 
+  // TODO channelize
   let resolve: () => void;
   exitHook(() => {
     resolve();
