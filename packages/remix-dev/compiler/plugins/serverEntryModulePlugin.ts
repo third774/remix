@@ -30,7 +30,7 @@ export function serverEntryModulePlugin(config: RemixConfig): Plugin {
           resolveDir: config.appDirectory,
           loader: "js",
           contents: `
-import * as entryServer from ${JSON.stringify(`./${config.entryServerFile}`)};
+import * as entryServer from ${JSON.stringify(config.entryServerFile)};
 ${Object.keys(config.routes)
   .map((key, index) => {
     let route = config.routes[key];

@@ -21,6 +21,8 @@ describe("readConfig", () => {
         serverBuildPath: expect.any(String),
         assetsBuildDirectory: expect.any(String),
         relativeAssetsBuildDirectory: expect.any(String),
+        entryClientFilePath: expect.any(String),
+        entryServerFilePath: expect.any(String),
         tsconfigPath: expect.any(String),
         future: {
           v2_meta: expect.any(Boolean),
@@ -34,7 +36,9 @@ describe("readConfig", () => {
         "devServerBroadcastDelay": 0,
         "devServerPort": Any<Number>,
         "entryClientFile": "entry.client.tsx",
+        "entryClientFilePath": Any<String>,
         "entryServerFile": "entry.server.tsx",
+        "entryServerFilePath": Any<String>,
         "future": Object {
           "v2_meta": Any<Boolean>,
         },
