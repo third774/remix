@@ -3,6 +3,6 @@
 "@remix-run/dev": patch
 ---
 
-bump esbuild to 0.15.11 to fix an issue with spreading props followed by a key as well as a `jsx name collision edge case` when using packages with the name `react` in them, like `@remix-run/react`.
+bump esbuild to fix an issue with spreading props followed by a key as well as a `jsx name collision edge case` when using packages with the name `react` in them, like `@remix-run/react`.
 
 it also utilizies esbuild's native yarn pnp compatibility instead of using `@yarnpkg/esbuild-plugin-pnp`
