@@ -2,7 +2,6 @@ import * as path from "path";
 import { builtinModules as nodeBuiltins } from "module";
 import * as esbuild from "esbuild";
 import { NodeModulesPolyfillPlugin } from "@esbuild-plugins/node-modules-polyfill";
-import { pnpPlugin as yarnPnpPlugin } from "@yarnpkg/esbuild-plugin-pnp";
 
 import { type RemixConfig } from "../config";
 import { createAssetsManifest, type AssetsManifest } from "./assets";
@@ -77,7 +76,6 @@ const createEsbuildConfig = (
     browserRouteModulesPlugin(config, /\?browser$/),
     emptyModulesPlugin(config, /\.server(\.[jt]sx?)?$/),
     NodeModulesPolyfillPlugin(),
-    yarnPnpPlugin(),
   ];
 
   return {
