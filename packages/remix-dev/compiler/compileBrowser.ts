@@ -61,7 +61,7 @@ const createEsbuildConfig = (
   options: CompileOptions
 ): esbuild.BuildOptions | esbuild.BuildIncremental => {
   let entryPoints: esbuild.BuildOptions["entryPoints"] = {
-    "entry.client": config.entryClientFile,
+    "entry.client": config.entryClientFilePath,
   };
   for (let id of Object.keys(config.routes)) {
     // All route entry points are virtual modules that will be loaded by the
